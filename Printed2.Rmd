@@ -1,0 +1,238 @@
+---
+#title: "Untitled"
+#author: "Darryl Beatty"
+#date: "9 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r library}
+library (dplyr)
+library(knitr)
+library(rmarkdown)
+library(kableExtra)
+```
+
+```{css}
+
+
+/* reduce size of tables */
+  
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, 
+.table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, 
+.table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{
+    padding: 1px;
+}
+
+.panel-primary>.panel-heading {
+color: #fff !important;
+background-color: #337ab7 !important;
+border-color: #337ab7;
+}
+
+.label {
+display: inline;
+padding: .2em .6em .3em;
+font-size: 75%;
+font-weight: 700;
+line-height: 1;
+color: #fff !important;
+text-align: center;
+white-space: nowrap;
+vertical-align: baseline;
+border-radius: .25em;
+}
+
+
+.label-primary {
+    background-color: #337ab7 !important;
+    border-color: #337ab7 !important;
+}
+
+.label-warning {
+    background-color: #f0ad4e !important;
+    border-color: #f0ad4e !important;   
+}
+
+.label-success {
+    background-color: #5cb85c !important;
+    border-color: #5cb85c !important;
+}
+
+/*
+  https://stackoverflow.com/questions/21032137/sticking-custom-footer-on-each-page-to-bottom-while-printing
+*/
+
+@media print{
+    .footer{
+       position:relative;
+       top:-30px; 
+       border-top: 1px solid grey;
+       height:10px;
+    }
+  
+      .header{
+       position:relative;
+       top:20px; 
+       border-bottom: 1px solid grey;
+       height:10px;
+    }
+}
+
+@media print {
+   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        float: left;
+   }
+   .col-sm-12 {
+        width: 100%;
+   }
+   .col-sm-11 {
+        width: 91.66666667%;
+   }
+   .col-sm-10 {
+        width: 83.33333333%;
+   }
+   .col-sm-9 {
+        width: 75%;
+   }
+   .col-sm-8 {
+        width: 66.66666667%;
+   }
+   .col-sm-7 {
+        width: 58.33333333%;
+   }
+   .col-sm-6 {
+        width: 50%;
+   }
+   .col-sm-5 {
+        width: 41.66666667%;
+   }
+   .col-sm-4 {
+        width: 33.33333333%;
+   }
+   .col-sm-3 {
+        width: 25%;
+   }
+   .col-sm-2 {
+        width: 16.66666667%;
+   }
+   .col-sm-1 {
+        width: 8.33333333%;
+   }
+}
+
+```
+
+<!-- # Heading and a label -->
+<div class="row" >
+<div class="col-sm-10" style="min-height: 80px; max-height: 80px;">
+## Example Report
+</div>
+<div class="col-sm-2" style="min-height: 80px; max-height: 80px;">
+<p>&nbsp;</p>
+<h4><span class="label label-primary"> `r paste0("Date: ",median(iris$Sepal.Length))`</span></h4> 
+</div>
+</div>
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+<h3>
+<span class="label label-primary"> `r paste0("Median: ",median(iris$Sepal.Length))`</span> 
+<span class="label label-warning"> `r paste0("Median: ",median(iris$Sepal.Length))`</span>
+<span class="label label-success"> `r paste0("Median: ",median(iris$Sepal.Length))`</span>
+</h3>
+  
+
+<div class="panel panel-primary">
+<div class="panel-heading">Panel Heading</div>
+<div class="panel-body">
+```{r}
+iris %>%
+  group_by(Species) %>%
+  summarise( median.Sepal.Length = median(Sepal.Length),
+             median.Sepal.Width = median(Sepal.Width)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "condensed")
+```
+
+```{r}
+iris %>%
+  group_by(Species) %>%
+  summarise( median.Sepal.Length = median(Sepal.Length),
+             median.Sepal.Width = median(Sepal.Width)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "condensed")
+```
+</div>
+</div>
+
+
+<div class="panel panel-default">
+<div class="panel-body"> 
+#### Basic plot   
+```{r pressure, echo=FALSE, fig.height= 3}
+library(ggplot2)
+
+  ggplot(data = longley) +
+  geom_line(aes( x= Year, y = Population) ) +
+  geom_line(aes( x= Year, y = Employed) ) 
+```
+</div>
+</div>
+
+<div style="page-break-after: always"></div>
+<div class="header">This is the Header Page2</div>
+<div class="footer">This is the Footer Page 1</div>
+  
+  
+<p></p>  <p></p>  <!-- # add two lines so that the content doesntstart in the header -->  
+<p></p>  <p></p>  <!-- # add two lines so that the content doesntstart in the header -->  
+
+
+<div class="row">
+<div class="col-sm-6">
+<div class="panel panel-default" >
+<div class="panel-body" style="min-height: 200px; max-height: 200px;"> 
+#### Small Table Panel 1  
+```{r sm_table1, echo=FALSE}
+iris %>%
+  group_by(Species) %>%
+  summarise( median.Sepal.Length = median(Sepal.Length),
+             median.Sepal.Width = median(Sepal.Width)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling(bootstrap_options = "condensed", full_width = T, position = "center", font_size = 10)
+```
+</div>
+</div>
+</div>
+
+<div class="col-sm-6">
+<div class="panel panel-default" >
+<div class="panel-body" style="min-height: 200px; max-height: 200px;">
+#### Small Chart Panel 2     
+```{r pressure2, echo=FALSE, fig.height= 2}
+library(ggplot2)
+
+  ggplot(data = longley) +
+  geom_line(aes( x= Year, y = Population) ) +
+  geom_line(aes( x= Year, y = Employed) ) 
+```
+</div>
+</div>
+</div>
+</div>
+
+
+<div style="page-break-after: always"></div>
+<div class="footer">This is the Footer Page2</div>
